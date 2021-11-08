@@ -166,18 +166,18 @@ function watchFile(path, base, rootPath) {
     base = path;
   } else {
     base = normalize(base);
-    log += '\n    ' + chalk.gray('as a dependency of') + ' ';
-    log += chalk.cyan(base);
+    // log += '\n    ' + chalk.gray('as a dependency of') + ' ';
+    // log += chalk.cyan(base);
   }
 
   if (watchList[path]) {
     if (watchList[path].indexOf(base) !== -1) return;
-    consoleLog(log);
+    // consoleLog(log);
     watchList[path].push(base);
     return;
   }
-
-  consoleLog(log);
+  if (!path.includes('includes')) // Don't log any inlcudes
+    consoleLog(log);
   watchList[path] = [base];
   fs.watchFile(path, {persistent: true, interval: 200},
                function (curr, prev) {
@@ -287,7 +287,8 @@ function renderFile(path, rootPath) {
     mkdirp.sync(dir);
     var output = options.client ? fn : fn(options);
     fs.writeFileSync(path, output);
-    consoleLog('  ' + chalk.gray('rendered') + ' ' + chalk.cyan('%s'), normalize(path));
+    var niceOutput = program.out + path.split(program.out)[1];
+    consoleLog('  ' + chalk.green('rendered') + ' ' + chalk.cyan('%s'), niceOutput);
   // Found directory
   } else if (stat.isDirectory()) {
     var files = fs.readdirSync(path);
