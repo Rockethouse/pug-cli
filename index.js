@@ -161,7 +161,7 @@ if (files.length) {
 function watchFile(path, base, rootPath) {
   path = normalize(path);
 
-  var log = '  ' + chalk.gray('watching') + ' ' + chalk.cyan(path);
+  var log = chalk.gray('watching') + ' ' + chalk.cyan(path);
   if (!base) {
     base = path;
   } else {
@@ -288,7 +288,7 @@ function renderFile(path, rootPath) {
     var output = options.client ? fn : fn(options);
     fs.writeFileSync(path, output);
     var niceOutput = program.out + path.split(program.out)[1];
-    consoleLog('  ' + chalk.green('rendered') + ' ' + chalk.cyan('%s'), niceOutput);
+    consoleLog(chalk.green('rendered') + ' ' + chalk.cyan('%s'), niceOutput);
   // Found directory
   } else if (stat.isDirectory()) {
     var files = fs.readdirSync(path);
