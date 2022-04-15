@@ -287,7 +287,9 @@ function renderFile(path, rootPath) {
     mkdirp.sync(dir);
     var output = options.client ? fn : fn(options);
     fs.writeFileSync(path, output);
-    var niceOutput = program.out + path.split(program.out)[1];
+    // var niceOutput = path
+    var niceOutput = (path.split(program.out)[1] != undefined) ? program.out + path.split(program.out)[1] : path;
+    // var niceOutput = program.out + path.split(program.out)[0];
     consoleLog(chalk.green('rendered') + ' ' + chalk.cyan('%s'), niceOutput);
   // Found directory
   } else if (stat.isDirectory()) {
